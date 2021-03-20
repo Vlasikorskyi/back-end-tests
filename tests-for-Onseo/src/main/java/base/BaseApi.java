@@ -121,7 +121,7 @@ public class BaseApi {
         int responseCode = jsonObject.getInt(RESPONSE_CODE);
         logger.info("Response Code : " + responseCode);
 
-        return assertJsonFormat(responseCode, res, false);
+        return assertJsonFormat(responseCode, res);
     }
 
     public JSONObject getData(String path) {
@@ -132,7 +132,7 @@ public class BaseApi {
         int responseCode = jsonObject.getInt(APIConst.RESPONSE_CODE);
         logger.info("Response Code : " + responseCode);
 
-        return assertJsonFormat(responseCode, res, false);
+        return assertJsonFormat(responseCode, res);
     }
 
     public JSONObject deleteData(String path) {
@@ -143,7 +143,7 @@ public class BaseApi {
         int responseCode = jsonObject.getInt(APIConst.RESPONSE_CODE);
         logger.info("Response Code : " + responseCode);
 
-        return assertJsonFormat(responseCode, res, false);
+        return assertJsonFormat(responseCode, res);
     }
 
     public JSONObject putData(String path, JSONObject object) {
@@ -154,16 +154,12 @@ public class BaseApi {
         logger.info("Response Code : " + responseCode);
         String res = getJsonFromRequest(response);
 
-        return assertJsonFormat(responseCode, res, false);
+        return assertJsonFormat(responseCode, res);
     }
 
-    private JSONObject assertJsonFormat(int responseCode, String res, boolean isReturnData) {
-        return assertJsonFormat(responseCode, res, isReturnData, true);
-    }
-
-    private JSONObject assertJsonFormat(int responseCode, String res, boolean isReturnData, boolean isPositive) {
+    private JSONObject assertJsonFormat(int responseCode, String res) {
         JSONObject resultInJson = new JSONObject();
-        int statusCode = isPositive ? 200 : 412;
+        int statusCode = 200;
         String responseFormat = "Response format isn't correct. ";
 
         try {
@@ -180,10 +176,6 @@ public class BaseApi {
                 System.out.println("500 !!!!!!!!!!!!!!!!!!!!!!!");
                 check500Errors(responseCode, res);
             }
-        }
-
-        if (isReturnData) {
-            resultInJson = resultInJson.has("data") ? resultInJson.getJSONObject("data") : resultInJson;
         }
 
         return resultInJson;

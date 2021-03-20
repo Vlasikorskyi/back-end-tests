@@ -60,14 +60,12 @@ public class Employee {
         return new EmployeeApi().deleteEmployeeDataByID(this.id);
     }
 
-    public Employee setEmployeesNameHasTwoA(){
+    public void setEmployeesNameHasTwoA(){
         String[] allCharsOfName = this.name.split("");
         this.isEmployeesNameHasTwoA = Arrays.stream(allCharsOfName).filter(e -> e.equalsIgnoreCase("a")).count() >= 2;
-        return this;
     }
-    public Employee setMiddleAgeEmployee() {
+    public void setMiddleAgeEmployee() {
         this.isMiddleAgeEmployee = Integer.parseInt(this.getAge()) > 20 && Integer.parseInt(this.getAge()) < 50;
-        return this;
     }
 
     public boolean isEmployeesNameHasTwoA() {
