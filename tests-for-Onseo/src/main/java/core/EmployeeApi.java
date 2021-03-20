@@ -1,17 +1,17 @@
 package core;
 
+import base.BaseApi;
 import base.Utils;
 import org.json.JSONArray;
-
-import static base.APIConst.DATA;
-import static base.APIConst.MAIN_PATH;
-import base.BaseApi;
 import org.json.JSONObject;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class EmployeeApi extends BaseApi{
+import static base.APIConst.DATA;
+import static base.APIConst.MAIN_PATH;
+
+public class EmployeeApi extends BaseApi {
 
     public JSONArray getAllEmployeesData() {
         return getData(MAIN_PATH + "employees").getJSONArray(DATA);

@@ -18,7 +18,7 @@ public class Employee {
     private boolean isMiddleAgeEmployee;
 
 
-    public Employee(){
+    public Employee() {
 
     }
 
@@ -41,31 +41,37 @@ public class Employee {
                 .put("employee_age", this.age);
     }
 
-    public JSONObject create(){
-        return new EmployeeApi().createEmployee(this.employeeToJSON()).getJSONObject(DATA);
+    public JSONObject create() {
+        JSONObject employeeObj = new EmployeeApi().createEmployee(this.employeeToJSON());
+        return employeeObj.has(DATA) ? employeeObj.getJSONObject(DATA) : employeeObj;
     }
 
-    public JSONObject createWithRandomField(){
+    public JSONObject createWithRandomField() {
         Faker faker = new Faker();
-        Employee employee = this.setName(faker.name().fullName())
-                .setAge(String.valueOf(faker.number().numberBetween(18, 70)))
-                .setSalary(String.valueOf(faker.number().numberBetween(1000, 2000)))
-                .setProfileImage(faker.gameOfThrones().character());
+        setName(faker.name().fullName());
+        setAge(String.valueOf(faker.number().numberBetween(18, 70)));
+        setSalary(String.valueOf(faker.number().numberBetween(1000, 2000)));
+        setProfileImage(faker.gameOfThrones().character());
         setEmployeesNameHasTwoA();
         setMiddleAgeEmployee();
-        return new EmployeeApi().createEmployee(employee.employeeToJSON()).getJSONObject(DATA);
+        return create();
     }
 
-    public JSONObject delete(){
+    public JSONObject delete() {
         return new EmployeeApi().deleteEmployeeDataByID(this.id);
     }
 
-    public void setEmployeesNameHasTwoA(){
+    public void setEmployeesNameHasTwoA() {
         String[] allCharsOfName = this.name.split("");
         this.isEmployeesNameHasTwoA = Arrays.stream(allCharsOfName).filter(e -> e.equalsIgnoreCase("a")).count() >= 2;
     }
+
     public void setMiddleAgeEmployee() {
-        this.isMiddleAgeEmployee = Integer.parseInt(this.getAge()) > 20 && Integer.parseInt(this.getAge()) < 50;
+        if (!this.age.isEmpty()) {
+            this.isMiddleAgeEmployee = Integer.parseInt(this.age) > 20 && Integer.parseInt(this.age) < 50;
+        } else {
+            this.isMiddleAgeEmployee = false;
+        }
     }
 
     public boolean isEmployeesNameHasTwoA() {

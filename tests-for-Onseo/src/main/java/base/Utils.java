@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 public class Utils {
+
     public static List<NameValuePair> setParametersFieldsAndValues(String... values) {
         List<NameValuePair> urlParameters = new ArrayList<>();
         for (int i = 0; i < values.length; i += 2) {
